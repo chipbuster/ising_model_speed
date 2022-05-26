@@ -14,8 +14,8 @@ for anyone iterested in testing for the comparison.
 */
 
 fn main() {
-    let t = 2. / log(1. + sqrt(2.));
-    // println!("{:#?}", t);
+    let t = 2. / log(1. + sqrt(2.)); //The critical temperature of a 2D Ising model.
+
     run(true, t);
 }
 /*
@@ -25,7 +25,7 @@ in principle, but I will use 1 for the classic ferromagnetic case.
 */
 const J: i8 = 1;
 const STEPS: usize = 1000;
-const SIDE: usize = 1000; // Making a default for square arrays
+const SIDE: usize = 500; // Making a default for square arrays
 const NPIXELS: u32 = 1000; // Used for giving the size of a side of the PNG.
 const NROWS: usize = SIDE;
 const NCOLUMNS: usize = SIDE;
@@ -52,7 +52,7 @@ fn run(order: bool, t: f64) {
     */
     if order == true {
         for x in &mut arr {
-            if rng.gen::<f32>() > 0.5 {
+            if *&rng.gen::<f32>() > 0.5 {
                 *x = 1i8
             } else {
                 *x = -1i8
@@ -91,6 +91,7 @@ fn run(order: bool, t: f64) {
     the top wraps to the bottom. If the energy is lowered by fliping the site's spin we
     do so, otherwise we flip the spin with probability exp(-2 * energy at the site * beta).
     */
+
     for _ in 0..STEPS {
         for j in 0..NCOLUMNS {
             for i in 0..NROWS {
@@ -106,10 +107,10 @@ fn run(order: bool, t: f64) {
                 let site = &arr[i * NROWS + j];
 
                 let en = J * site * (nn + ss + ww + ee);
-                let pcomp = rng.gen::<f64>();
+                let pcomp = &rng.gen::<f64>();
 
                 let k = 4 + en;
-                if pcomp < probs[k as usize] {
+                if *pcomp < probs[k as usize] {
                     arr[i * NROWS + j] = -1 * arr[i * NROWS + j];
                 }
             }
