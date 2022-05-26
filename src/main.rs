@@ -128,7 +128,6 @@ fn run(order: bool, t: f64) {
 Defining a basic plotting function for the array as a png. This maps the array to a 2D
 histogram where an up spin (1) is white, and a down spin (-1) is teal.
 */
-
 fn plot(&arr: &[i8; LEN], name: String) -> Result<(), Box<dyn std::error::Error>> {
     let name = name.as_str();
 
