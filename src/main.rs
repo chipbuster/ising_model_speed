@@ -3,6 +3,16 @@ use plotters::prelude::*;
 use rand::prelude::*;
 use std::time::Instant;
 
+/*
+This code is largely based off of an implementation I fist saw written in
+julia's Ising2D.jl written by genkuroki: https://github.com/genkuroki/Ising2D.jl/blob/master/src/Ising2D.jl
+I wanted to see how a fairly naive port to rust would do as most the work
+is done is "low level" ways using arrays and for loops. The performance of
+this rust code is lackluster, taking twice the time of the julia implementation.
+My rewritten stripped down julia implementation is included along side this one
+for anyone iterested in testing for the comparison.
+*/
+
 fn main() {
     let t = 2. / log(1. + sqrt(2.));
     // println!("{:#?}", t);
