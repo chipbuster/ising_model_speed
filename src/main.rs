@@ -1,6 +1,9 @@
-use libm::{exp, log, sqrt};
+//use libm::{exp, log, sqrt};
 use plotters::prelude::*;
 use rand::prelude::*;
+use rand_xoshiro::rand_core::SeedableRng;
+use rand_xoshiro::Xoshiro256Plus;
+use std::f64::consts::E;
 use std::time::Instant;
 
 /*
@@ -14,7 +17,7 @@ for anyone iterested in testing for the comparison.
 */
 
 fn main() {
-    let t = 2. / log(1. + sqrt(2.)); //The critical temperature of a 2D Ising model.
+    let t = 2. / (1. + 2f64.sqrt()).log(E); //The critical temperature of a 2D Ising model.
 
     run(true, t);
 }
@@ -25,7 +28,7 @@ in principle, but I will use 1 for the classic ferromagnetic case.
 */
 const J: i8 = 1;
 const STEPS: usize = 1000;
-const SIDE: usize = 500; // Making a default for square arrays
+const SIDE: usize = 1000; // Making a default for square arrays
 const NPIXELS: u32 = 1000; // Used for giving the size of a side of the PNG.
 const NROWS: usize = SIDE;
 const NCOLUMNS: usize = SIDE;
@@ -42,7 +45,7 @@ fn run(order: bool, t: f64) {
     randomizing the initial state when order is passed as true.
     */
     let mut arr = [0i8; LEN];
-    let mut rng = thread_rng();
+    let mut rng = Xoshiro256Plus::from_entropy();
 
     let beta = 1. / t; // beta is a convenience variable for inverse Temp.
 
@@ -52,7 +55,7 @@ fn run(order: bool, t: f64) {
     */
     if order == true {
         for x in &mut arr {
-            if *&rng.gen::<f32>() > 0.5 {
+            if *&rng.gen::<f64>() > 0.5 {
                 *x = 1i8
             } else {
                 *x = -1i8
@@ -71,7 +74,7 @@ fn run(order: bool, t: f64) {
     let mut probs = [0f64; 9];
     let mut inc: f64 = -4.0;
     for prob in &mut probs {
-        *prob = exp(-2. * beta * inc);
+        *prob = (-2. * beta * inc).exp();
         inc += 1.;
     }
     // Show the image before the interations for comparison.
