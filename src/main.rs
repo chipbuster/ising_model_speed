@@ -63,7 +63,10 @@ fn run(order: bool, t: f64) {
     } else {
         arr = [1i8; LEN];
     }
+    // Show the image before the interations for comparison.
+    plot(&arr, String::from("before.png")).unwrap();
 
+    let now = Instant::now();
     /*
     Create a static array of probabilites based on the local energy of a given
     site. This can be done because the local energy is one of a discrete number
@@ -76,10 +79,7 @@ fn run(order: bool, t: f64) {
         *prob = (-2. * beta * inc).exp();
         inc += 1.;
     }
-    // Show the image before the interations for comparison.
-    plot(&arr, String::from("before.png")).unwrap();
 
-    let now = Instant::now();
     /*
     This is the major loop of the model. STEPS is the number of times we iterate through
     the lattice trying to flip each spin. j is the iterating over the "columns"
