@@ -1,4 +1,4 @@
-using BenchmarkTools, GLMakie
+using BenchmarkTools
 
 # quick and dirty julia implementation
 function ising!(lat::Matrix{Int8}, t::Float64, nsteps::Int)
@@ -20,14 +20,10 @@ function ising!(lat::Matrix{Int8}, t::Float64, nsteps::Int)
     return array
 end
 
-function plot_ising(lat::Matrix{Int8})
-    array = lat
-    heatmap(array, ticks=false)
-end
-
 T = 2 / log(1 + sqrt(2))
 side = 500
 steps = 1000
 array = rand(Int8[-1,1], side, side)
 
-@elapsed ising!(array, T, steps) 
+t = @elapsed ising!(array, T, steps) 
+display(t)
