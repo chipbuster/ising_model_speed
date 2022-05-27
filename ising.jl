@@ -24,6 +24,8 @@ T = 2 / log(1 + sqrt(2))
 side = 500
 steps = 1000
 array = rand(Int8[-1,1], side, side)
+ising!(array, T, 1) 
 
+array = rand(Int8[-1,1], side, side)
 t = @elapsed ising!(array, T, steps) 
 display(t)
