@@ -95,8 +95,8 @@ fn run(order: bool, t: f64) {
     */
 
     for _ in 0..STEPS {
-        for j in 0..NCOLUMNS {
-            for i in 0..NROWS {
+        for i in 0..NROWS {
+            for j in 0..NCOLUMNS {
                 let inorth = (i + 1) % NROWS;
                 let isouth = if i == 0 { NROWS - 1 } else { i - 1 };
                 let jeast = (j + 1) % NCOLUMNS;
