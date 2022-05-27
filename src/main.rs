@@ -1,4 +1,3 @@
-//use libm::{exp, log, sqrt};
 use plotters::prelude::*;
 use rand::prelude::*;
 use rand_xoshiro::rand_core::SeedableRng;
@@ -28,7 +27,7 @@ in principle, but I will use 1 for the classic ferromagnetic case.
 */
 const J: i8 = 1;
 const STEPS: usize = 1000;
-const SIDE: usize = 1000; // Making a default for square arrays
+const SIDE: usize = 500; // Making a default for square arrays
 const NPIXELS: u32 = 1000; // Used for giving the size of a side of the PNG.
 const NROWS: usize = SIDE;
 const NCOLUMNS: usize = SIDE;
