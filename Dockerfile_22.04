@@ -1,0 +1,21 @@
+FROM ubuntu:22.04
+
+RUN apt-get update
+RUN apt-get --assume-yes install build-essential git curl
+
+RUN mkdir /root/setup
+WORKDIR /root/setup
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN curl -LOk https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.3-linux-x86_64.tar.gz 
+RUN tar xf julia-1.7.3-linux-x86_64.tar.gz
+RUN ln -s /root/setup/julia-1.7.3/bin/julia /usr/bin/julia
+
+RUN mkdir /root/benches
+WORKDIR /root/benches
+COPY ./ /root/benches/
+WORKDIR /root/benches
+RUN /root/.cargo/bin/cargo build --release
+
+COPY run_bench.sh /root/benches/ising_model_speed/run_bench.sh
+ENTRYPOINT ["sh", "run_bench.sh"]
